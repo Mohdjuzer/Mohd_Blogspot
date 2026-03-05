@@ -1,13 +1,12 @@
-# Use PHP 8.2 with Apache
 FROM php:8.2-apache
 
-# Install system dependencies
+# Install system dependencies + PHP extensions
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
     libzip-dev \
     zip \
-    && docker-php-ext-install pdo pdo_mysql
+    && docker-php-ext-install pdo pdo_mysql exif
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
