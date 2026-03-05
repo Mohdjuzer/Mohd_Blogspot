@@ -1,0 +1,15 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\User;
+
+class FollowerController extends Controller
+{
+   public function followUnfollow(User $user){
+    $user->followers()->toggle(auth()->user()->id);
+    return response()->json(['followersCount'=> $user->followers()->count(),]);
+   }
+}
