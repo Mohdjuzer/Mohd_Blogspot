@@ -10,4 +10,15 @@ services:
       php artisan config:cache
       php artisan route:cache
       php artisan view:cache
+      php artisan storage:link
+      php artisan migrate --force
     startCommand: php -S 0.0.0.0:$PORT -t public
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_KEY
+        value: base64:+vMqrnchYoYTIh4bSpj4RD+cZdS15GRXtJbvLixzNoY=
+      - key: LOG_CHANNEL
+        value: stack

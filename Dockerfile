@@ -37,6 +37,12 @@ RUN chown -R www-data:www-data storage bootstrap/cache
 # Expose port 80
 EXPOSE 80
 
+# Create production .env
+RUN echo "APP_ENV=production" > /var/www/html/.env && \
+    echo "APP_DEBUG=false" >> /var/www/html/.env && \
+    echo "DB_CONNECTION=pgsql" >> /var/www/html/.env && \
+    echo "LOG_CHANNEL=stack" >> /var/www/html/.env
+
 # Apache should serve public folder
 RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
 RUN a2enmod rewrite
