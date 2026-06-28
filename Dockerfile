@@ -1,5 +1,8 @@
 FROM php:8.2-apache
 
+# Install Node (for Vite build)
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && apt-get install -y nodejs
+
 # Install system dependencies + PHP extensions
 RUN apt-get update && apt-get install -y \
     git \
@@ -17,6 +20,9 @@ WORKDIR /var/www/html
 # Copy project files
 COPY . .
 
+# Build frontend assets
+RUN npm install && npm run build
+
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
@@ -33,3 +39,4 @@ EXPOSE 80
 
 # Apache should serve public folder
 RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
+RUN a2enmod rewrite
