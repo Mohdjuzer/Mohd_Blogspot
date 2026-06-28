@@ -46,3 +46,8 @@ RUN echo "APP_ENV=production" > /var/www/html/.env && \
 # Apache should serve public folder
 RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
 RUN a2enmod rewrite
+
+# Enable error logging to stdout
+RUN echo "log_errors = On" >> /usr/local/etc/php/php.ini-production && \
+    echo "error_log = /dev/stderr" >> /usr/local/etc/php/php.ini-production && \
+    echo "display_errors = Off" >> /usr/local/etc/php/php.ini-production
